@@ -30,13 +30,15 @@ However, below is a breif usage.
 
 
 ## Future
+EchoAuth - Provide an Authentication middleware.
+
 More database support - MySQL, PostgresSQL and MariaDB support.
 
 Redis Middleware Plugin - provide a seemless way to plugin and use Redis with Echo.
 
 MongoDB support - Provide NoSQL database support.
 
-Rate Limiting - Provide rate limiting on the App, Routers, Models and Routes.
+Rate Limiting - Provide rate limiting on the App, Routers, and Routes.
 
 EchoTest - A testing framework designed specifically for Echo.
 
