@@ -4,23 +4,38 @@ return new class extends EchoModel {
 
     // Handles a request
     public function getAllUsers(EchoRequest $req, EchoResponse $res) {
-        // Fake CPU-intensive task
-        $data = $req->cache->find('Data', FALSE);
-        if(isset($data['sum'])){
-            $sum = $data['sum'];
-        } else{
-            $sum = 0;
-            for ($i = 0; $i < 2000000; $i++) {
-                $sum += sqrt($i);
-            }
-            $req->cache->put('Data', ['sum' => $sum], new EchoDataCacheTTL(), FALSE);
-        }
 
-        $message = $this->params['message'];
+        $database = $req->database->start();
+
+        $database->query('
+            SELECT * FROM Users;
+        ');
+        $database->execute();
+        $rows = $database->all('array');
 
         $res->status(200)->json([
-            'message' => 'Getting all users!',
-            'Sum!' => $sum
+            'Users' => $rows
+        ]);
+    }
+
+    // Inserts a user
+    public function insertUser(EchoRequest $req, EchoResponse $res) {
+
+        $database = $req->database->start();
+
+        $body = $req->body;
+
+        // id, name
+        $database->query('
+            INSERT INTO Users
+            (name)
+            VALUES(:name);
+        ');
+        $database->bind(':name', $body->get('name', 'DEFAULT'));
+        $database->execute();
+
+        $res->status(200)->json([
+            'message' => 'Success',
         ]);
     }
 

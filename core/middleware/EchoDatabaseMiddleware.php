@@ -37,7 +37,6 @@ class EchoDatabaseMiddleware implements EchoMiddleware {
             $this->error(EchoErrorType::InvalidEnv);
         }
         $connection->configure($env);
-        $connection->start();
 
         // Return
         return $connection;

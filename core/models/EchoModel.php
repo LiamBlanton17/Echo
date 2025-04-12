@@ -18,11 +18,9 @@ abstract class EchoModel extends stdClass {
 
     /**
      * @param string $func is the name of the handler to call
-     * @param array $params is an array of parameters to add to the model
      * @return callable Will return a callable function to the router/app
      */
-    public function __invoke(string $func, array $params = []): callable {
-        $this->params = $params;
+    public function __invoke(string $func): callable {
         return [$this, $func];
     }
     

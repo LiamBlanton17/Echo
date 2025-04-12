@@ -8,10 +8,11 @@ abstract class EchoDatabaseConnection implements EchoDatabaseConnectionInterface
     
     use EchoErrors, EchoEnv;
 
-    protected mixed $connection;
+    protected mixed $pdo;
+    protected mixed $stmt;
 
     public function connection(): mixed {
-        return $this->connection;
+        return $this->pdo;
     }
 
 }

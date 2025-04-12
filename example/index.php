@@ -13,6 +13,7 @@ $middleware = [
     'EchoSessionMiddleware',
     'EchoResponseCacheMiddleware',
     'EchoDataCacheMiddleware',
+    'EchoDatabaseMiddleware',
 ];
 
 $app->use($middleware);

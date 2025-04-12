@@ -36,3 +36,9 @@ require(__DIR__.'/cache/data-based/EchoDataCache.php');
 require(__DIR__.'/cache/data-based/EchoDataCacheObject.php');
 require(__DIR__.'/cache/data-based/EchoDataCachePolicyInterface.php');
 require(__DIR__.'/cache/data-based/EchoDataCacheTTL.php');
+
+// Database
+require(__DIR__.'/database/EchoSQLMethods.php');
+require(__DIR__.'/database/EchoDatabaseConnectionInterface.php');
+require(__DIR__.'/database/EchoDatabaseConnection.php');
+require(__DIR__.'/database/EchoSQLiteConnection.php');
