@@ -77,7 +77,7 @@ class EchoApp {
 
         // Connect the middleware
         $current = $handler;
-        foreach (array_reverse($this->middleware) as $mwClass) {
+        foreach(array_reverse($this->middleware) as $mwClass) {
             $mw = new $mwClass();
             $next = $current;
             $current = function($req, $res) use ($mw, $next) {
