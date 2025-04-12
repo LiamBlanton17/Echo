@@ -2,6 +2,7 @@
 
 return new class extends EchoModel {
 
+    // Handles a request
     public function getAllUsers(EchoRequest $req, EchoResponse $res) {
         // Fake CPU-intensive task
         $data = $req->cache->find('Data', FALSE);
@@ -14,6 +15,9 @@ return new class extends EchoModel {
             }
             $req->cache->put('Data', ['sum' => $sum], new EchoDataCacheTTL(), FALSE);
         }
+
+        $message = $this->params['message'];
+
         $res->status(200)->json([
             'message' => 'Getting all users!',
             'Sum!' => $sum
