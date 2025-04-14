@@ -2,23 +2,23 @@
 
 require(__DIR__.'/../core/EchoRequire.php');
 
-// Load routers
-$userRouter = require(__DIR__.'/routers/User.routers.php');
-
 $app = new EchoApp();
+
+// Loading routers
+$adminRouter = require(__DIR__.'/routers/Admin.router.php');
+$userRouter = require(__DIR__.'/routers/User.router.php');
 
 $app->use(EchoJSONMiddleware::use());
 $app->use(EchoEnvMiddleware::use());
-$app->use(EchoCORSMiddleware::use()->prod()->test()->dev());
 $app->use(EchoSessionMiddleware::use());
-$app->use(EchoResponseCacheMiddleware::use());
-
-$app->mount('/user', $userRouter);
 
 $app->get('/', function(EchoRequest $req, EchoResponse $res) {
     $res->status(200)->json([
-        'message' => 'Successfully connectioned!'
+        'message' => 'Connected to an Echo Framework.'
     ]);
 });
+
+$app->mount('/admin', $adminRouter);
+$app->mount('/user', $userRouter);
 
 $app->start();
