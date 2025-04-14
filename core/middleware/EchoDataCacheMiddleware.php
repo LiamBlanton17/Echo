@@ -4,31 +4,40 @@
  * TODO: Add Description
  */
 
-class EchoDataCacheMiddleware implements EchoMiddleware {
+class EchoDataCacheMiddleware extends EchoBaseMiddleware {
     
     use EchoErrors, EchoEnv;
 
     protected array $requiredEnv = ['CACHEPATH'];
 
     /**
-     * @param req EchoRequest from the app
-     * @param res EchoResponse from the app
-     * @param next This is the run function for the next middleware
+     * This function is run before the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
      * @return NULL
      */
-    public function run(EchoRequest $req, EchoResponse $res, callable $next) {
+    protected function _before(EchoRequest $req, EchoResponse $res) {
         // Verify correct env exist
         if(!$this->verifyEnv($req->env)){
-            $this->error(EchoErrorType::InvalidEnv);
+            $this->error(EchoError::InvalidEnv);
         }
 
         // Verify EchoSessions are being used
         if(!isset($req->session)){
-            $this->error(EchoErrorType::NoEchoSession);
+            $this->error(EchoError::NoEchoSession);
         }
         
         $req->cache = new EchoDataCache($req);
-        $next($req, $res);
+    }
+
+    /**
+     * This function is run after the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
+     * @return NULL
+     */
+    protected function _after(EchoRequest $req, EchoResponse $res) {
+
     }
 
 }

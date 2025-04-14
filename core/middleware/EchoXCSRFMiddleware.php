@@ -4,21 +4,20 @@
  * TODO: Add Description
  */
 
-class EchoXCSRFMiddleware implements EchoMiddleware {
+class EchoXCSRFMiddleware extends EchoBaseMiddleware {
     
     use EchoErrors;
 
     /**
-     * @param req EchoRequest from the app
-     * @param res EchoResponse from the app
-     * @param next This is the run function for the next middleware
+     * This function is run before the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
      * @return NULL
      */
-    public function run(EchoRequest $req, EchoResponse $res, callable $next) {
-
+    protected function _before(EchoRequest $req, EchoResponse $res) {
         // Verify EchoSessions are being used
         if(!isset($req->session)){
-            $this->error(EchoErrorType::NoEchoSession);
+            $this->error(EchoError::NoEchoSession);
         }
         $session = $req->session;
 
@@ -27,7 +26,7 @@ class EchoXCSRFMiddleware implements EchoMiddleware {
             $previousToken = $session->get('X-CSRF-Token', '');
             $headerToken = $req->headers['X-CSRF-Token'] ?? '';
             if(!hash_equals($previousToken, $headerToken)) {
-                $this->error(EchoErrorType::InvalidXCSRF);
+                $this->error(EchoError::InvalidXCSRF);
             }
         }
 
@@ -35,7 +34,16 @@ class EchoXCSRFMiddleware implements EchoMiddleware {
         $newToken = bin2hex(random_bytes(32));
         $session->set('X-CSRF-Token', $newToken);
         $res->json(['X-CSRF-Token' => $newToken]);
-        $next($req, $res);
+    }
+
+    /**
+     * This function is run after the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
+     * @return NULL
+     */
+    protected function _after(EchoRequest $req, EchoResponse $res) {
+
     }
 
 }

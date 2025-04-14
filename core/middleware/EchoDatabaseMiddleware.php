@@ -4,42 +4,30 @@
  * TODO: Add Description
  */
 
-class EchoDatabaseMiddleware implements EchoMiddleware {
+class EchoDatabaseMiddleware extends EchoBaseMiddleware {
     
     use EchoErrors;
 
     /**
-     * @param req EchoRequest from the app
-     * @param res EchoResponse from the app
-     * @param next This is the run function for the next middleware
+     * This function is run before the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
      * @return NULL
      */
-    public function run(EchoRequest $req, EchoResponse $res, callable $next) {
-        $req->database = $this->_connect($req->env);
-        $next($req, $res);
+    protected function _before(EchoRequest $req, EchoResponse $res) {
+        if(!isset($req->env)){
+            $this->error(Echoerror::InvalidEnv);
+        }
+        $env = $req->env;
+        $req->database = EchoDatabaseFactory::create($env);
     }
 
     /**
-     * @param env From the echo.env file
-     * @return EchoDatabaseConnectionInterface A connection to the database
+     * This function is run after the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
+     * @return NULL
      */
-    public function _connect(array $env): EchoDatabaseConnectionInterface {
-
-        // Verify that the provided class is a databaseclass
-        $class = $env['DBCLASS'];
-        if(!(class_exists($class) && in_array(EchoDatabaseConnectionInterface::class, class_implements($class)))){
-            $this->error(EchoErrorType::InvalidDatabaseConnection);
-        }
-
-        // Connect to the database
-        $connection = new $class();
-        if(!$connection->verifyEnv($env)){
-            $this->error(EchoErrorType::InvalidEnv);
-        }
-        $connection->configure($env);
-
-        // Return
-        return $connection;
-    }
+    protected function _after(EchoRequest $req, EchoResponse $res) {}
 
 }

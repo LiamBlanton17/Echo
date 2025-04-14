@@ -4,21 +4,19 @@
  * TODO: Add Description
  */
 
-class EchoSQLiteConnection extends EchoDatabaseConnection {
-
-    use EchoSQLMethods;
-    
-    protected array $requiredEnv = ['DBFILE'];
+class EchoSQLiteConnection extends EchoPDOConnection {
 
     protected string $file;
 
-    public function configure(array $env){
+    public function __construct(array $env) {
+        if(!isset($env['DBFILE'])){
+            $this->error(EchoError::InvalidEnv);
+        }
         $this->file = $env['DBFILE'];
     }
 
     public function start(): self {
         $dsn = "sqlite:{$this->file}";
-
         try {
             $this->pdo = new PDO($dsn, null, null, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -28,7 +26,6 @@ class EchoSQLiteConnection extends EchoDatabaseConnection {
         } catch (PDOException $e) {
             throw new Exception("SQLite connection failed: " . $e->getMessage());
         }
-
         return $this;
     }
 

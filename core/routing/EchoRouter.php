@@ -6,7 +6,7 @@
 
 class EchoRouter {
 
-    use EchoErrors, EchoRouting;
+    use EchoErrors, EchoRouting, EchoUseMiddleware;
     
     protected $_handle404 = NULL; // Error 404 handler
 
@@ -16,7 +16,12 @@ class EchoRouter {
      * @return NULL/Callable
      */
     public function _getHandler(string $method, string $route): ?callable {
-        return $this->getHandler($method, $route) ?? $this->_handle404;
+        $handler = $this->getHandler($method, $route) ?? $this->_handle404;
+        if(is_null($handler)){
+            return NULL;
+        }
+        $middle = $this->_connectMiddleware($handler);
+        return $middle;
     }
 
     /**

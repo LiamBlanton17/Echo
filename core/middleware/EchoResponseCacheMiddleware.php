@@ -4,36 +4,39 @@
  * TODO: Add Description
  */
 
-class EchoResponseCacheMiddleware implements EchoMiddleware {
+class EchoResponseCacheMiddleware extends EchoBaseMiddleware {
     
     use EchoErrors, EchoEnv;
 
     protected array $requiredEnv = ['CACHEPATH'];
 
+    protected bool $hasPolicy;
+
     /**
-     * @param req EchoRequest from the app
-     * @param res EchoResponse from the app
-     * @param next This is the run function for the next middleware
+     * This function is run before the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
      * @return NULL
      */
-    public function run(EchoRequest $req, EchoResponse $res, callable $next) {
-
+    protected function _before(EchoRequest $req, EchoResponse $res) {
         // Verify correct env exist
         if(!$this->verifyEnv($req->env)){
-            $this->error(EchoErrorType::InvalidEnv);
+            $this->error(EchoError::InvalidEnv);
         }
 
         // Verify EchoSessions are being used
         if(!isset($req->session)){
-            $this->error(EchoErrorType::NoEchoSession);
+            $this->error(EchoError::NoEchoSession);
         }
 
         // Lookup in cache - if there is a policy
-        $hasPolicy = !is_null($req->cachingPolicy);
-        if($hasPolicy){
-            $result = EchoResponseCache::get($req);
+        $this->hasPolicy = !is_null($req->cachingPolicy);
+        if($this->hasPolicy){
+            $result = EchoResponseCache::get($req); 
             if(!is_null($result)){
                 /**
+                 * Perhaps use the fact that EchoResponse::get() is a singleton?
+                 * 
                  * I think this is a really bad way of doing things
                  * But you cannot write $res = $result; return;
                  * That does not transfer the $res back to the EchoApp scope.
@@ -44,12 +47,17 @@ class EchoResponseCacheMiddleware implements EchoMiddleware {
                 die(); 
             }
         }
+    }
 
-        // If not found, continue
-        $next($req, $res);
-
+    /**
+     * This function is run after the handler
+     * @param EchoRequest $req EchoRequest from the app
+     * @param EchoResponse $res EchoResponse from the app
+     * @return NULL
+     */
+    protected function _after(EchoRequest $req, EchoResponse $res) {
         // Cache the result - if there is a policy
-        if($hasPolicy){
+        if($this->hasPolicy){
             EchoResponseCache::put($req, $res);
         }
     }

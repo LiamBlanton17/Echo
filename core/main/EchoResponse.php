@@ -14,9 +14,7 @@ class EchoResponse {
 
     protected static ?self $reponse = NULL;  // Response singleton object
 
-    protected function __construct() {
-        
-    }
+    protected function __construct() {}
 
     /**
      * @return EchoResponse The singleton object
@@ -57,6 +55,9 @@ class EchoResponse {
      */
     public function output() {
         // TODO: more to output? headers, ect
+        $this->status = $this->status ?? 500;
+        $this->body = $this->body ?? new EchoJSON(['message' => 'No Body was set?']);
+
         http_response_code($this->status);
         echo $this->body->encode();
     }

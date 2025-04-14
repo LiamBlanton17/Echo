@@ -1,10 +1,10 @@
 <?php
 
-return new class extends EchoModel {
+$model = new class extends EchoModel {
 
     // Handles a request
     public function getAllUsers(EchoRequest $req, EchoResponse $res) {
-
+        
         $database = $req->database->start();
 
         $database->query('
@@ -40,3 +40,7 @@ return new class extends EchoModel {
     }
 
 };
+
+$model->use(EchoDatabaseMiddleware::use());
+
+return $model;

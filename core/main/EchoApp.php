@@ -6,39 +6,20 @@
 
 class EchoApp {
 
-    use EchoErrors, EchoRouting;
+    use EchoErrors, EchoRouting, EchoUseMiddleware;
 
-    protected array $middleware = [];  // An array of middleware
     protected array $routers = [];  // A prefixed array of prefixes and routers
     protected $_handle404; // Error 404 handler
 
-    protected bool $useCache = FALSE;  // Determine if we should lookup cache or not
-
     public function __construct() {
+
+        // Setting the default 500 handlers
+        [$exceptionHandler, $errorHandler] = $this->_default500s();
+        //set_exception_handler($exceptionHandler);
+        //set_error_handler($errorHandler);
+
+        // Setting the default 404 handler
         $this->_handle404 = $this->_default404();
-    }
-
-    /**
-     * @param middleware Array of classes, all of which must implement EchoMiddleware
-     * @throws \Exception If any class does not exist or does not implement EchoMiddleware
-     * @return NULL
-     */
-    public function use(array $middleware) {
-    
-        // Validate middleware passed to the function as classes that implement EchoMiddleware
-        foreach($middleware as $mw){
-            if(!(class_exists($mw) && in_array(EchoMiddleware::class, class_implements($mw)))){
-                $this->error(EchoErrorType::InvalidMiddlware);
-            }
-            
-            // Determine if EchoResponseCacheMiddleware is in use
-            if($mw === EchoResponseCacheMiddleware::class){
-                $this->useCache = TRUE;
-            }
-        }
-
-        // Save the middleware to the app
-        $this->middleware = $middleware;
 
     }
 
@@ -53,7 +34,7 @@ class EchoApp {
      * @throws \Exception Variety of exceptions can be thrown
      * @return NULL 
      */
-    public function start() {
+    public function start() { 
 
         // Populate the base request/response
         $request = EchoRequest::get();
@@ -71,19 +52,10 @@ class EchoApp {
         }
 
         // Determine caching policy - if in use
-        if($this->useCache){
-            $request->cachingPolicy = $this->_getCachingPolicy($method, $route);
-        }
+        $request->cachingPolicy = $this->_getCachingPolicy($method, $route);
 
         // Connect the middleware
-        $current = $handler;
-        foreach(array_reverse($this->middleware) as $mwClass) {
-            $mw = new $mwClass();
-            $next = $current;
-            $current = function($req, $res) use ($mw, $next) {
-                $mw->run($req, $res, $next);
-            };
-        }
+        $current = $this->_connectMiddleware($handler);
 
         // Run the middleware
         $current($request, $response);
@@ -146,7 +118,7 @@ class EchoApp {
     /**
      * @return callable
      */
-    protected function _default404() {
+    protected function _default404(): callable {
         return function($res, $req) {
             $method = $res->method;
             $route = $res->route;
@@ -156,6 +128,32 @@ class EchoApp {
                 'method' => $method
             ]);
         };
+    }
+
+    /**
+     * @return array An array of callable 500 functions
+     */
+    protected function _default500s(): array {
+
+        // Handle exceptions 
+        $exceptionHandler = function(Throwable $e){
+            $res = EchoResponse::get();
+            $res->status(500)->json([
+                'message' => 'Internal server error. Debugging support to be added.'
+            ])->output();
+            die();
+        };
+
+        // Handle errors
+        $errorHandler = function(int $errno, string $errstr, string $errfile, int $errline){
+            $res = EchoResponse::get();
+            $res->status(500)->json([
+                'message' => 'Internal server error. Debugging support to be added.'
+            ])->output();
+            die();
+        };
+
+        return [$exceptionHandler, $errorHandler];
     }
 
 }

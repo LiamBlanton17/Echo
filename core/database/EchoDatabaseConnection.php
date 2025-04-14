@@ -1,18 +1,11 @@
 <?php
 
 /**
- * TODO: Add Description
+ * TODO: Add Descriptions
  */
 
-abstract class EchoDatabaseConnection implements EchoDatabaseConnectionInterface {
-    
-    use EchoErrors, EchoEnv;
+interface EchoDatabaseConnection {
 
-    protected mixed $pdo;
-    protected mixed $stmt;
-
-    public function connection(): mixed {
-        return $this->pdo;
-    }
+    public function start();
 
 }
