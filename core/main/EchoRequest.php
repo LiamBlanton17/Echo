@@ -67,7 +67,7 @@ class EchoRequest extends stdClass {
             "cookies" => $this->cookies,
             "cachingPolicy" => $this->cachingPolicy,
             "completePath" => $this->completePath,
-            default => $this->error(EchoErrorType::InvalidRequestAttribute)
+            default => $this->error(EchoError::InvalidRequestAttribute)
         };
     }
 

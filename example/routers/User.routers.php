@@ -7,7 +7,7 @@ $model = require(__DIR__.'/../models/User.models.php');
 $router = new EchoRouter();
 $router->use(EchoDataCacheMiddleware::use());
 
-$router->get('/', $model('getAllUsers'));
+$router->get('/', $model('getAllUsers'), new EchoTTLPolicy(120, FALSE, TRUE));
 $router->post('/', $model('insertUser'));
 
 $router->get('/router', function($req, $res) {

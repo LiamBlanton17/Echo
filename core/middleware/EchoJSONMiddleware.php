@@ -57,6 +57,8 @@ class EchoJSONMiddleware extends EchoBaseMiddleware {
      */
     protected function _after(EchoRequest $req, EchoResponse $res) {
 
+        // Header is being added after the handler - prevents dev from changing it
+        $res->addHeader('Content-Type', 'application/json');
     }
 
 }

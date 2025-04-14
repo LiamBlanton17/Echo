@@ -15,11 +15,14 @@ class EchoApp {
 
         // Setting the default 500 handlers
         [$exceptionHandler, $errorHandler] = $this->_default500s();
-        //set_exception_handler($exceptionHandler);
-        //set_error_handler($errorHandler);
+        set_exception_handler($exceptionHandler);
+        set_error_handler($errorHandler);
 
         // Setting the default 404 handler
         $this->_handle404 = $this->_default404();
+
+        // Adding in the Echo header
+        header("X-Powered-By: Echo");
 
     }
 

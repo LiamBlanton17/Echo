@@ -9,6 +9,8 @@ class EchoResponse {
     use EchoErrors;
 
     protected int $status;  // HTTP reponse status
+    protected array $headers = [];  // Headers to send
+    protected array $cookies = [];  // Cookies to use
 
     protected EchoJSON $body;  // Object that wraps JSON for the response body
 
@@ -51,14 +53,68 @@ class EchoResponse {
     }
 
     /**
+     * 
+     */
+    public function addHeader(string $key, string $value): self {
+        $this->headers[$key] = $value;
+        return $this;
+    }
+
+    /**
+     * 
+     */
+    public function removeHeader(string $key): self {
+        unset($this->headers[$key]);
+        return $this;
+    }
+
+    /**
+     * 
+     */
+    public function cookie(string $name, string $value, array $options = []): self {
+        $defaults = [
+            'secure' => false,
+            'httponly' => false,
+            'samesite' => 'Lax',
+            'path' => '/',
+            'expires' => time() + 3600,
+        ];
+        $options = array_merge($defaults, $options);
+        $this->cookies[$name] = ['value' => $value, 'options' => $options]; 
+        return $this;
+    }
+
+
+    /**
      * @return NULL
      */
     public function output() {
-        // TODO: more to output? headers, ect
+        
+        // Verify status and body
         $this->status = $this->status ?? 500;
-        $this->body = $this->body ?? new EchoJSON(['message' => 'No Body was set?']);
+        $this->body = $this->body ?? new EchoJSON(['message' => 'No body was set. Server error.']);
 
+        // Set headers
+        foreach($this->headers as $key => $header){
+            header("$key: $header");
+        }
+
+        // Use cookies
+        foreach($this->cookies as $key => $cookie) {
+            $value = $cookie['value'];
+            $expires = gmdate("D, d-M-Y H:i:s T", $cookie['options']['expires']);;
+            $path = $cookie['options']['path'];
+            $secure = $cookie['options']['secure'] ? '1' : '0';
+            $httponly = $cookie['options']['httponly'] ? '1' : '0';
+            $samesite = $cookie['options']['samesite'];
+
+            header("Set-Cookie: $key={$value}; expires={$expires}; path={$path}; secure={$secure}; httponly={$httponly}; samesite={$samesite}");
+        }
+
+        // Set reponse code
         http_response_code($this->status);
+
+        // Send response
         echo $this->body->encode();
     }
 

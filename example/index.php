@@ -9,6 +9,7 @@ $app = new EchoApp();
 
 $app->use(EchoJSONMiddleware::use());
 $app->use(EchoEnvMiddleware::use());
+$app->use(EchoCORSMiddleware::use()->prod()->test()->dev());
 $app->use(EchoSessionMiddleware::use());
 $app->use(EchoResponseCacheMiddleware::use());
 

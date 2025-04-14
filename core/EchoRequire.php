@@ -25,6 +25,7 @@ require(__DIR__.'/middleware/EchoBaseMiddleware.php');
 require(__DIR__.'/middleware/EchoJSONMiddleware.php');
 require(__DIR__.'/middleware/EchoSessionMiddleware.php');
 require(__DIR__.'/middleware/EchoXCSRFMiddleware.php');
+require(__DIR__.'/middleware/EchoCORSMiddleware.php');
 require(__DIR__.'/middleware/EchoEnvMiddleware.php');
 require(__DIR__.'/middleware/EchoResponseCacheMiddleware.php');
 require(__DIR__.'/middleware/EchoDataCacheMiddleware.php');
