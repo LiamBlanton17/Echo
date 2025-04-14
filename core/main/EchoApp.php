@@ -75,7 +75,7 @@ class EchoApp {
         // Check the routers first
         foreach($this->routers as $prefix => $router){
             if(strpos($route, $prefix) === 0){
-                return $router->_getHandler($method, ltrim($route, $prefix)) ?? $this->_handle404;
+                return $router->_getHandler($method, substr($route, strlen($prefix))) ?? $this->_handle404;
             }   
         }
 

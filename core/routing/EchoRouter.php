@@ -17,6 +17,7 @@ class EchoRouter {
      */
     public function _getHandler(string $method, string $route): ?callable {
         $handler = $this->getHandler($method, $route) ?? $this->_handle404;
+
         if(is_null($handler)){
             return NULL;
         }
