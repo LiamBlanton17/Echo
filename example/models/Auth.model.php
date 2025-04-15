@@ -1,6 +1,6 @@
 <?php
 
-$model = new class extends EchoAuthModel {
+class AuthModel extends EchoAuthModel {
 
     public function login(EchoRequest $req, EchoResponse $res) {
 
@@ -45,4 +45,6 @@ $model = new class extends EchoAuthModel {
 
 };
 
-return $model;
+$AuthModel = new AuthModel();
+
+return $AuthModel;

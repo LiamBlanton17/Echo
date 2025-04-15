@@ -1,6 +1,6 @@
 <?php
 
-$model = new class extends EchoModel {
+class AdminModel extends EchoModel {
 
     // Custom Auth method
     private function _auth(EchoRequest $req) {
@@ -50,6 +50,6 @@ $model = new class extends EchoModel {
 
 };
 
-$model->use(EchoDatabaseMiddleware::use());
+$AdminModel = new AdminModel();
 
-return $model;
+return $AdminModel;

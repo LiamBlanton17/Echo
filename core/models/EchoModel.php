@@ -15,10 +15,10 @@ abstract class EchoModel extends stdClass {
     public function __invoke(string $func): callable {
         $handler = [$this, $func];
 
-        $current = $this->_connectMiddleware($handler);
+        //$current = $this->_connectMiddleware($handler);
 
-        return $current;
+        return $handler;
     }
-    
+
 }
 

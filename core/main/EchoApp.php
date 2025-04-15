@@ -1,5 +1,8 @@
 <?php
 
+// Without this, could not create handlers without models
+use Laravel\SerializableClosure\SerializableClosure;
+
 /**
  * TODO: Add Description
  */
@@ -9,17 +12,12 @@ class EchoApp {
     use EchoErrors, EchoRouting, EchoUseMiddleware;
 
     protected array $routers = [];  // A prefixed array of prefixes and routers
-    protected $_handle404; // Error 404 handler
+    protected $_handle404 = NULL; // Error 404 handler
 
     public function __construct() {
 
-        // Setting the default 500 handlers
-        [$exceptionHandler, $errorHandler] = $this->_default500s();
-        set_exception_handler($exceptionHandler);
-        set_error_handler($errorHandler);
-
         // Setting the default 404 handler
-        $this->_handle404 = $this->_default404();
+        $this->_handle404 = new SerializableClosure($this->_default404());
 
     }
 
@@ -31,10 +29,37 @@ class EchoApp {
     }
 
     /**
+     * Serialize this app
+     * 
+     * @param string $location is where to put the app
+     * @param string $name is the name of the app
+     * @return NULL
+     */
+    public function build(string $location, string $name) {
+        file_put_contents($location.'/'.$name, serialize($this));
+    }
+
+    /**
+     * Unserialize an app
+     * 
+     * @param string $location is where the app is
+     * @param string $name is the name of the app
+     * @return EchoApp
+     */
+    public static function boot(string $location,  string $name) {
+        return unserialize(file_get_contents($location.'/'.$name));
+    }
+
+    /**
      * @throws \Exception Variety of exceptions can be thrown
      * @return NULL 
      */
-    public function start() { 
+    public function start() {
+
+        // Setting the default 500 handlers
+        [$exceptionHandler, $errorHandler] = $this->_default500s();
+        set_exception_handler($exceptionHandler);
+        set_error_handler($errorHandler);
 
         // Populate the base request/response
         $request = EchoRequest::get();
@@ -46,8 +71,7 @@ class EchoApp {
         $handler = $this->_getHandler($method, $route);
         if(is_null($handler)){
             // If not found, run 404 and output
-            $this->_error404($request, $response);
-            $response->output()->finish();
+            die();
         }
 
         // Determine caching policy - if in use
@@ -100,7 +124,7 @@ class EchoApp {
         return $this->getCachingPolicy($method, $route) ?? NULL;
     }
 
-    /**
+        /**
      * @return NULL
      */
     protected function _error404($req, $res) {
@@ -111,7 +135,7 @@ class EchoApp {
      * @return NULL
      */
     public function set404(callable $new404) {
-        $this->_handle404 = $new404;
+        $this->_handle404 = new SerializableClosure($new404);
     }
 
     /**
@@ -151,6 +175,7 @@ class EchoApp {
         };
 
         return [$exceptionHandler, $errorHandler];
+
     }
 
 }

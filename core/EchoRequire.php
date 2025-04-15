@@ -4,6 +4,10 @@
  * TODO: Add Description
  */
 
+
+// Autoloader
+require __DIR__ . '/../vendor/autoload.php';
+
 // Traits
 require(__DIR__.'/middleware/EchoUseMiddleware.php');
 require(__DIR__.'/other/EchoErrors.php');
@@ -43,7 +47,7 @@ require(__DIR__.'/cache/data-based/EchoDataCacheTTL.php');
 
 // Auth
 require(__DIR__.'/authentication/EchoAuth.php');
-require(__DIR__.'/authentication/EchoAuthModel.php');
+require(__DIR__.'/models/EchoAuthModel.php');
 require(__DIR__.'/authentication/EchoAuthRouter.php');
 
 // Database
