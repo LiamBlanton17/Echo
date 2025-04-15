@@ -16,22 +16,43 @@ Check out the example folder in the project for a complete example.
 
 However, below is a breif usage.
 
-    $app = new EchoApp(); // Start the app
+### app.php
+```
+// Load in Echo
+require(__DIR__.'/core/EchoRequire');
 
-    $app->use($middleware);  // Use some sort of middleware
+// Start an app
+$app = new EchoApp();
 
-    // Define a GET route 
-    $app->get('/', function($req, $res){
-        res->status(200)->json(['message' => 'A get route on the root']);
-    });
+// Define a route
+$app->get('/', function(EchoRequest $req, EchoResponse $res){
+    $res->status(200)->json([
+        'message' => 'Creating a GET route with Echo!'
+    ]);
+});
 
-    // Handle the request
-    $app->start();
+// Build the app
+$app->build(__DIR__.'/app/app');
+```
+
+### server.php
+```
+// Load in Echo
+require(__DIR__.'/core/EchoRequire');
+
+// Boot the app
+$app = EchoApp::boot(__DIR__.'/app/app');
+
+// Handle the request
+$app->start();
+```
 
 ## Dependcies
 Echo requires Laravel\SerializableClosure\SerializableClosure
 
 https://github.com/laravel/serializable-closure
+
+Closures are not serializable by default in PHP.
 
 ## Future
 More database support - MySQL, PostgresSQL and MariaDB support.
