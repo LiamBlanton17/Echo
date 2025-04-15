@@ -1,5 +1,8 @@
 <?php
 
+// Without this, could not create handlers without models
+use Laravel\SerializableClosure\SerializableClosure;
+
 /**
  * This trait is used by EchoApp and EchoRouter
  */
@@ -9,12 +12,20 @@ trait EchoRouting {
     protected array $routes = [];  // An array of routes. Populated by route or routers
     
     /**
+     * @param handler Function to handle the request
+     * @return mixed Returns either just the handler if it wasn't a closure, or a laravel serializable closure
+     */
+    protected function serializeable($handler): mixed {
+        return $handler instanceof \Closure ? new SerializableClosure($handler) : $handler;
+    }
+
+    /**
      * @param route Route to set under the GET method
      * @param handler Function to handle the request
      * @return NULL
      */
     public function get(string $route, callable $handler, ?EchoResponseCachingPolicyInterface $cache = NULL) {
-        $this->routes['GET'][$route]['handler'] = $handler;
+        $this->routes['GET'][$route]['handler'] = $this->serializeable($handler);
         $this->routes['GET'][$route]['cache'] = $cache;
     }
 
@@ -24,7 +35,7 @@ trait EchoRouting {
      * @return NULL
      */
     public function post(string $route, callable $handler) {
-        $this->routes['POST'][$route]['handler'] = $handler;
+        $this->routes['POST'][$route]['handler'] = $this->serializeable($handler);
     }
 
     /**
@@ -33,7 +44,7 @@ trait EchoRouting {
      * @return NULL
      */
     public function put(string $route, callable $handler) {
-        $this->routes['PUT'][$route]['handler'] = $handler;
+        $this->routes['PUT'][$route]['handler'] = $this->serializeable($handler);
     }
 
     /**
@@ -42,7 +53,7 @@ trait EchoRouting {
      * @return NULL
      */
     public function patch(string $route, callable $handler) {
-        $this->routes['PATCH'][$route]['handler'] = $handler;
+        $this->routes['PATCH'][$route]['handler'] = $this->serializeable($handler);
     }
 
     /**
@@ -51,7 +62,7 @@ trait EchoRouting {
      * @return NULL
      */
     public function delete(string $route, callable $handler) {
-        $this->routes['DELETE'][$route]['handler'] = $handler;
+        $this->routes['DELETE'][$route]['handler'] = $this->serializeable($handler);
     }
 
     /**

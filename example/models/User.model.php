@@ -1,6 +1,6 @@
 <?php
 
-$model = new class extends EchoModel {
+class UserModal extends EchoModel {
 
     // Custom Auth method
     private function _auth(EchoRequest $req) {
@@ -73,12 +73,11 @@ $model = new class extends EchoModel {
         $res->status(200)->json([
             'users'=> $users
         ]);
-    }
 
+    }
 
 };
 
-$model->use(EchoDatabaseMiddleware::use());
-$model->use(EchoAuthMiddleware::use());
+$UserModal = new UserModal();
 
-return $model;
+return $UserModal;
