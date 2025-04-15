@@ -25,8 +25,7 @@ class EchoAuthMiddleware extends EchoBaseMiddleware {
         }
 
         if(!$req->session->get('EchoAuthID')) {
-            $res->status(401)->json(['message' => 'Unauthorized'])->output();
-            die();
+            $res->status(401)->json(['message' => 'Unauthorized'])->output()->finish();
         }
         
     }

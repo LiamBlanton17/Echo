@@ -86,9 +86,9 @@ class EchoResponse {
 
 
     /**
-     * @return NULL
+     * @return self
      */
-    public function output() {
+    public function output(): self {
         
         // Verify status and body
         $this->status = $this->status ?? 500;
@@ -119,6 +119,17 @@ class EchoResponse {
 
         // Send response
         echo $this->body->encode();
+
+        return $this;
+    }
+
+    /**
+     * Use this function as an alias to die/exit. Call it after calling output
+     * 
+     * @return NULL
+     */
+    public function finish() {
+        exit;
     }
 
 }

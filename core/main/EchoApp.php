@@ -47,8 +47,7 @@ class EchoApp {
         if(is_null($handler)){
             // If not found, run 404 and output
             $this->_error404($request, $response);
-            $response->output();
-            return;
+            $response->output()->finish();
         }
 
         // Determine caching policy - if in use
@@ -61,7 +60,7 @@ class EchoApp {
         $current($request, $response);
 
         // Output the response
-        $response->output();
+        $response->output()->finish();
 
     }
 
@@ -140,8 +139,7 @@ class EchoApp {
             $res = EchoResponse::get();
             $res->status(500)->json([
                 'message' => 'Internal server error. Debugging support to be added.'
-            ])->output();
-            die();
+            ])->output()->finish();
         };
 
         // Handle errors
@@ -149,8 +147,7 @@ class EchoApp {
             $res = EchoResponse::get();
             $res->status(500)->json([
                 'message' => 'Internal server error. Debugging support to be added.'
-            ])->output();
-            die();
+            ])->output()->finish();
         };
 
         return [$exceptionHandler, $errorHandler];
