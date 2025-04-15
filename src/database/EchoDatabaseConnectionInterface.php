@@ -1,5 +1,7 @@
 <?php
 
+namespace EchoFramework\Application\Database;
+
 /**
  * TODO: Add Descriptions
  */

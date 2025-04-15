@@ -1,5 +1,7 @@
 <?php
 
+namespace EchoFramework\Application\Other;
+
 /**
  * TODO: Add Description
  */

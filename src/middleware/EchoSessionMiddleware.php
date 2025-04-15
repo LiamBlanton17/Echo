@@ -1,5 +1,11 @@
 <?php
 
+namespace EchoFramework\Application\Middleware;
+
+use EchoFramework\Application\Main\EchoRequest;
+use EchoFramework\Application\Main\EchoResponse;
+use EchoFramework\Application\Other\EchoSession;
+
 /**
  * TODO: Add Description
  */

@@ -1,5 +1,7 @@
 <?php
 
+namespace EchoFramework\Application\Middleware;
+
 /**
  * TODO: Add Description
  */

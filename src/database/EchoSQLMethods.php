@@ -1,5 +1,9 @@
 <?php
 
+namespace EchoFramework\Application\Database;
+
+use \PDO;
+
 /**
  * TODO: Add Description
  */

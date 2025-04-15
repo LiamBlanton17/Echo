@@ -1,6 +1,19 @@
 <?php
 
-require(__DIR__.'/../core/EchoRequire.php');
+require __DIR__ . '/../vendor/autoload.php';
+
+use EchoFramework\Application\Main\{
+    EchoApp,
+    EchoRequest,
+    EchoResponse,
+};
+
+use EchoFramework\Application\Middleware\{
+    EchoJSONMiddleware,
+    EchoEnvMiddleware,
+    EchoSessionMiddleware,
+    EchoDatabaseMiddleware,
+};
 
 $app = new EchoApp();
 

@@ -1,5 +1,12 @@
 <?php
 
+use EchoFramework\Application\Main\{
+    EchoRequest,
+    EchoResponse,
+};
+
+use EchoFramework\Application\Models\EchoAuthModel;
+
 class AuthModel extends EchoAuthModel {
 
     public function login(EchoRequest $req, EchoResponse $res) {

@@ -1,5 +1,12 @@
 <?php
 
+use EchoFramework\Application\Main\{
+    EchoRequest,
+    EchoResponse,
+};
+
+use EchoFramework\Application\Models\EchoModel;
+
 class AdminModel extends EchoModel {
 
     // Custom Auth method

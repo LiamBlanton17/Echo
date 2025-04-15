@@ -1,9 +1,8 @@
 <?php
 
-/**
- * TODO: Add Description
- */
+namespace EchoFramework\Application\Other;
 
+use \Exception;
 
 /**
  * EchoError is the class Echo uses to provide consistent errors and error messages

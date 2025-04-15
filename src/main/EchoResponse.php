@@ -1,5 +1,10 @@
 <?php
 
+namespace EchoFramework\Application\Main;
+
+use EchoFramework\Application\Other\EchoErrors;
+use EchoFramework\Application\Other\EchoJSON;
+
 /**
  * TODO: Add Description
  */

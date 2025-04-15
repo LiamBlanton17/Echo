@@ -1,5 +1,12 @@
 <?php
 
+namespace EchoFramework\Application\Models;
+
+use EchoFramework\Application\Middleware\EchoUseMiddleware;
+use EchoFramework\Application\Other\EchoErrors;
+
+use \stdClass;
+
 /**
  * TODO: Add Description
  */

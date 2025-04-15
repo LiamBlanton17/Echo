@@ -1,10 +1,18 @@
 <?php
 
+namespace EchoFramework\Application\Other;
+
+use EchoFramework\Application\Main\EchoRequest;
+use EchoFramework\Application\Other\EchoError;
+use EchoFramework\Application\Other\EchoErrors;
+
 /**
  * TODO: Add Description, Add Descriptions to functions
  */
 
 class EchoSession {
+
+    use EchoErrors;
 
     private bool $new = FALSE; // Determines if this is a new session or not
 

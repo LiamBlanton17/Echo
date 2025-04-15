@@ -1,5 +1,10 @@
 <?php
 
+
+namespace EchoFramework\Application\Authentication;
+
+use EchoFramework\Application\Main\EchoRequest;
+
 /**
  * TODO: Add Description
  */

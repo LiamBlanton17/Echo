@@ -1,5 +1,13 @@
 <?php
 
+namespace EchoFramework\Application\Main;
+
+use EchoFramework\Application\Other\EchoError;
+use EchoFramework\Application\Other\EchoErrors;
+use EchoFramework\Application\Other\EchoJSON;
+
+use \stdClass;
+
 /**
  * TODO: Add Description
  */

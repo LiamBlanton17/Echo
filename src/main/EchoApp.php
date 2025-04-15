@@ -1,7 +1,17 @@
 <?php
 
+namespace EchoFramework\Application\Main;
+
 // Without this, could not create handlers without models
 use Laravel\SerializableClosure\SerializableClosure;
+
+use EchoFramework\Application\Other\EchoErrors;
+use EchoFramework\Application\Middleware\EchoUseMiddleware;
+use EchoFramework\Application\Routing\EchoRouting;
+use EchoFramework\Application\Routing\EchoRouter;
+use EchoFramework\Application\Cache\RouteBased\EchoResponseCachingPolicyInterface;
+
+use \Throwable;
 
 /**
  * TODO: Add Description

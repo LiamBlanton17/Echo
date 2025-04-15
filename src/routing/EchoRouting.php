@@ -1,7 +1,11 @@
 <?php
 
+namespace EchoFramework\Application\Routing;
+
 // Without this, could not create handlers without models
 use Laravel\SerializableClosure\SerializableClosure;
+
+use EchoFramework\Application\Cache\RouteBased\EchoResponseCachingPolicyInterface;
 
 /**
  * This trait is used by EchoApp and EchoRouter

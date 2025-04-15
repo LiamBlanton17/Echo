@@ -1,5 +1,7 @@
 <?php
 
+use EchoFramework\Application\Routing\EchoRouter;
+
 $router = new EchoRouter();
 
 // Loading models

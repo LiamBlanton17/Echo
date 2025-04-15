@@ -1,5 +1,13 @@
 <?php
 
+namespace EchoFramework\Application\Middleware;
+
+use EchoFramework\Application\Other\EchoErrors;
+use EchoFramework\Application\Other\EchoError;
+use EchoFramework\Application\Database\EchoDatabaseFactory;
+use EchoFramework\Application\Main\EchoRequest;
+use EchoFramework\Application\Main\EchoResponse;
+
 /**
  * TODO: Add Description
  */

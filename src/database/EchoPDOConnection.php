@@ -1,5 +1,9 @@
 <?php
 
+namespace EchoFramework\Application\Database;
+
+use EchoFramework\Application\Other\EchoErrors;
+
 /**
  * TODO: Add Description
  */

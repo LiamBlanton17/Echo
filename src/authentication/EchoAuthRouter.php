@@ -1,5 +1,10 @@
 <?php
 
+namespace EchoFramework\Application\Authentication;
+
+use EchoFramework\Application\Routing\EchoRouter;
+use EchoFramework\Application\Models\EchoAuthModel;
+
 /**
  * TODO: Add Description
  */

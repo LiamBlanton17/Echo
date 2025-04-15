@@ -1,5 +1,10 @@
 <?php
 
+namespace EchoFramework\Application\Database;
+
+use EchoFramework\Application\Other\EchoError;
+use \PDO, \PDOException, \Exception;
+
 /**
  * TODO: Add Description
  */

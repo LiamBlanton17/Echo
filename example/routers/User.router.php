@@ -1,5 +1,7 @@
 <?php
 
+use EchoFramework\Application\Routing\EchoRouter;
+
 // Loading models
 $User = require(__DIR__.'/../models/User.model.php');
 
