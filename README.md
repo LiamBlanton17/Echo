@@ -29,7 +29,7 @@ However, below is a breif usage.
     $app->start();
 
 ## Dependcies
-Echo requires Laravel\SerializableClosure\SerializableClosure;
+Echo requires Laravel\SerializableClosure\SerializableClosure
 
 https://github.com/laravel/serializable-closure
 
