@@ -9,7 +9,7 @@ This keeps the core of the framework extremely lightweight; easy to use, easy to
 
 The focus is on easy to plug in and out middleware, speed, and reusability.
 
-In addition, the base version of Echo does not require any dependencies, however support for dependencies will be added.
+In addition, the base version of Echo requires one dependency, however support for more dependencies will be added.
 
 ## Usage
 Check out the example folder in the project for a complete example.
@@ -28,10 +28,12 @@ However, below is a breif usage.
     // Handle the request
     $app->start();
 
+## Dependcies
+Echo requires Laravel\SerializableClosure\SerializableClosure;
+
+https://github.com/laravel/serializable-closure
 
 ## Future
-EchoAuth - Provide an Authentication middleware.
-
 More database support - MySQL, PostgresSQL and MariaDB support.
 
 Redis Middleware Plugin - provide a seemless way to plugin and use Redis with Echo.
