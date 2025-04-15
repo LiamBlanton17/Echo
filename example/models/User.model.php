@@ -79,5 +79,6 @@ $model = new class extends EchoModel {
 };
 
 $model->use(EchoDatabaseMiddleware::use());
+$model->use(EchoAuthMiddleware::use());
 
 return $model;

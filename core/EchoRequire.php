@@ -30,6 +30,7 @@ require(__DIR__.'/middleware/EchoEnvMiddleware.php');
 require(__DIR__.'/middleware/EchoResponseCacheMiddleware.php');
 require(__DIR__.'/middleware/EchoDataCacheMiddleware.php');
 require(__DIR__.'/middleware/EchoDatabaseMiddleware.php');
+require(__DIR__.'/middleware/EchoAuthMiddleware.php');
 
 // Caching
 require(__DIR__.'/cache/route-based/EchoCachingPolicyInterface.php');
@@ -39,6 +40,11 @@ require(__DIR__.'/cache/data-based/EchoDataCache.php');
 require(__DIR__.'/cache/data-based/EchoDataCacheObject.php');
 require(__DIR__.'/cache/data-based/EchoDataCachePolicyInterface.php');
 require(__DIR__.'/cache/data-based/EchoDataCacheTTL.php');
+
+// Auth
+require(__DIR__.'/authentication/EchoAuth.php');
+require(__DIR__.'/authentication/EchoAuthModel.php');
+require(__DIR__.'/authentication/EchoAuthRouter.php');
 
 // Database
 require(__DIR__.'/database/EchoSQLMethods.php');

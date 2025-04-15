@@ -35,7 +35,7 @@ class EchoSession {
     public function __get(string $attribute): mixed {
         return match($attribute){
             "id" => $this->id,
-            default => $this->error(EchoErrorType::InvalidRequestAttribute)
+            default => $this->error(EchoError::InvalidRequestAttribute)
         };
     }
 

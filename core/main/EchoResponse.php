@@ -99,6 +99,9 @@ class EchoResponse {
             header("$key: $header");
         }
 
+        // Adding in the Echo header
+        header("X-Powered-By: Echo");
+
         // Use cookies
         foreach($this->cookies as $key => $cookie) {
             $value = $cookie['value'];

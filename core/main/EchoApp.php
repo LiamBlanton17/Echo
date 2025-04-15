@@ -21,9 +21,6 @@ class EchoApp {
         // Setting the default 404 handler
         $this->_handle404 = $this->_default404();
 
-        // Adding in the Echo header
-        header("X-Powered-By: Echo");
-
     }
 
     /**

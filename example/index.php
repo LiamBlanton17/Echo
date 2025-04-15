@@ -7,6 +7,7 @@ $app = new EchoApp();
 // Loading routers
 $adminRouter = require(__DIR__.'/routers/Admin.router.php');
 $userRouter = require(__DIR__.'/routers/User.router.php');
+$authRouter = require(__DIR__.'/routers/Auth.router.php');
 
 $app->use(EchoJSONMiddleware::use());
 $app->use(EchoEnvMiddleware::use());
@@ -20,5 +21,6 @@ $app->get('/', function(EchoRequest $req, EchoResponse $res) {
 
 $app->mount('/admin', $adminRouter);
 $app->mount('/user', $userRouter);
+$app->mount('/auth', $authRouter);
 
 $app->start();
