@@ -1,0 +1,14 @@
+{
+    "name": "echo/application",
+    "description": "Lightweight PHP Framework",
+    "type": "library",
+    "require": {
+        "laravel/serializable-closure": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Echo\\Application\\": "core/"
+        }
+    },
+    "license": "MIT"
+}
