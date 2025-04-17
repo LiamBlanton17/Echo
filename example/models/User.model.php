@@ -1,11 +1,13 @@
 <?php
 
+use EchoFramework\Application\Database\Management\UsersTable;
 use EchoFramework\Application\Main\{
     EchoRequest,
     EchoResponse,
 };
 
 use EchoFramework\Application\Models\EchoModel;
+use EchoFramework\Application\Views\UserView;
 
 class UserModal extends EchoModel {
 

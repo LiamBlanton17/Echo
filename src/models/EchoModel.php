@@ -22,6 +22,7 @@ abstract class EchoModel extends stdClass {
     public function __invoke(string $func): callable {
         $handler = [$this, $func];
 
+        //Perhaps bring this back with the new Laravel Serializable Closure!?
         //$current = $this->_connectMiddleware($handler);
 
         return $handler;

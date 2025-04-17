@@ -1,46 +1,45 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+// Using autoloader
+require __DIR__.'/../vendor/autoload.php';
 
+// Bringing in Echo main classes
 use EchoFramework\Application\Main\{
-    EchoApp,
+    EchoApp, 
     EchoRequest,
-    EchoResponse,
+    EchoResponse
 };
 
+// Bringing in Echo middleware classes
 use EchoFramework\Application\Middleware\{
     EchoJSONMiddleware,
     EchoEnvMiddleware,
     EchoSessionMiddleware,
-    EchoDatabaseMiddleware,
+    EchoBasicSecurityMiddleware
 };
 
+// Bringing in the Routers
+$AuthRouter = require __DIR__.'/routers/Auth.router.php';
+
+// Building a new Echo App
 $app = new EchoApp();
 
-// Loading routers
-$adminRouter = require(__DIR__.'/routers/Admin.router.php');
-$userRouter = require(__DIR__.'/routers/User.router.php');
-$authRouter = require(__DIR__.'/routers/Auth.router.php');
-
+// Using middleware
 $app->use(EchoJSONMiddleware::use());
 $app->use(EchoEnvMiddleware::use());
 $app->use(EchoSessionMiddleware::use());
-$app->use(EchoDatabaseMiddleware::use());
+$app->use(EchoBasicSecurityMiddleware::use());
 
-$app->mount('/admin', $adminRouter);
-$app->mount('/user', $userRouter);
-$app->mount('/auth', $authRouter);
+// Mounting the Auth router
+$app->mount('/auth', $AuthRouter);
 
+// Setting up a new route
 $app->get('/', function(EchoRequest $req, EchoResponse $res) {
-    $res->status(200)->json([
-        'message' => 'Pre boot route'
-    ]);
+
+    // Returning a simple connection message
+    $res->status(200)->message('Connected to an EchoFramework');
+
 });
 
-$app->patch('/', function(EchoRequest $req, EchoResponse $res) {
-    $res->status(200)->json([
-        'message' => 'Pre patch route'
-    ]);
-});
-
-$app->build('/mnt/c/Users/Liamb/SideProjects/Echo/example/app', 'app');
+// Building the app, calling it EchoApp, and placing it in the given directory
+$app->build('/mnt/c/Users/Liamb/SideProjects/Echo/example/app', 'EchoApp');

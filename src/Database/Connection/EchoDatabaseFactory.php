@@ -1,6 +1,6 @@
 <?php
 
-namespace EchoFramework\Application\Database;
+namespace EchoFramework\Application\Database\Connection;
 
 use EchoFramework\Application\Other\EchoError;
 

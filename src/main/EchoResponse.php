@@ -46,9 +46,22 @@ class EchoResponse {
     /**
      * @param json PHP Associative array to be converted to the json response
      * @return self
-     * @todo Use enum for statuses instead of an int, and verify it is a valid status
      */
     public function json(array $json): self {
+        if(!isset($this->body)){
+            $this->body = new EchoJSON($json);
+        } else {
+            $this->body->append($json);
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $message will get placed in the json with the key message
+     * @return self
+     */
+    public function message(string $message): self {
+        $json = ['message' => $message];
         if(!isset($this->body)){
             $this->body = new EchoJSON($json);
         } else {

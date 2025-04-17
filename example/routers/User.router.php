@@ -1,13 +1,16 @@
 <?php
 
+use EchoFramework\Application\Middleware\EchoAuthMiddleware;
 use EchoFramework\Application\Routing\EchoRouter;
 
 // Loading models
-$User = require(__DIR__.'/../models/User.model.php');
+$UserModel = require(__DIR__.'/../models/User.model.php');
 
-$router = new EchoRouter();
+$UserRouter = new EchoRouter();
 
-$router->get('/all', $User('all'));
-$router->post('/create', $User('create'));
+$UserRouter->use(EchoAuthMiddleware::use());
 
-return $router;
+$UserRouter->get('/all', $UserModel('all'));
+$UserRouter->post('/create', $UserModel('create'));
+
+return $UserRouter;

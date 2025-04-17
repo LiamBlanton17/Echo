@@ -1,10 +1,12 @@
 <?php
 
+// Bringing in the main classes
 use EchoFramework\Application\Main\{
     EchoRequest,
     EchoResponse,
 };
 
+// Bringing in AuthRouter class
 use EchoFramework\Application\Models\EchoModel;
 
 class AdminModel extends EchoModel {

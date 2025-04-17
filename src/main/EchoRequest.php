@@ -24,6 +24,7 @@ class EchoRequest extends stdClass {
     protected string $uri;     // Full URI of the request
     protected string $completePath; // Full Path of the request
     protected float $timeStamp;  // Time of the request
+    protected string $ip;  // IP of the requesting client
 
     protected static ?self $request = NULL;  // Request singleton object
 
@@ -34,6 +35,7 @@ class EchoRequest extends stdClass {
         $this->route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $this->cookies = $_COOKIE;
         $this->query = $_GET;
+        $this->ip = $_SERVER['REMOTE_ADDR'];
 
         $this->completePath = $this->method.' '.$this->route;
 
@@ -75,6 +77,7 @@ class EchoRequest extends stdClass {
             "cookies" => $this->cookies,
             "cachingPolicy" => $this->cachingPolicy,
             "completePath" => $this->completePath,
+            "ip" => $this->ip,
             default => $this->error(EchoError::InvalidRequestAttribute)
         };
     }
