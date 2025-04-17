@@ -54,6 +54,9 @@ https://github.com/laravel/serializable-closure
 
 Closures are not serializable by default in PHP.
 
+## Next
+CL Tool - Provide a command line tool for Echo.
+
 ## Future
 More database support - MySQL, PostgresSQL and MariaDB support.
 
@@ -61,12 +64,12 @@ Redis Middleware Plugin - provide a seemless way to plugin and use Redis with Ec
 
 MongoDB support - Provide NoSQL database support.
 
-Rate Limiting - Provide rate limiting on the App, Routers, and Routes.
+Rate Limiting - Provide more advanced rate limiting on the App, Routers, and Routes.
 
 EchoTest - A testing framework designed specifically for Echo.
 
 Better caching - The caching system could use a major rework, and more policies.
 
-ORM Support - Either EchoORM or provide a middleware plugin to utilize an ORM.
+EchoTables - Ability to create relational tables with PHP, and migrate them with the CL Tool
 
-CL Tool - Provide a command line tool for Echo.
+EchoViews - Provide an abstraction on top of but detached from EchoTables. In combination, the two will provide an ORM-like abstraction but without the "magic".
