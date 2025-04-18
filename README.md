@@ -57,6 +57,8 @@ Closures are not serializable by default in PHP.
 ## Next
 CL Tool - Provide a command line tool for Echo.
 
+EchoTable - Write Relational tables in PHP, and migrate them with the CL Tool.
+
 ## Future
 More database support - MySQL, PostgresSQL and MariaDB support.
 
@@ -69,7 +71,5 @@ Rate Limiting - Provide more advanced rate limiting on the App, Routers, and Rou
 EchoTest - A testing framework designed specifically for Echo.
 
 Better caching - The caching system could use a major rework, and more policies.
-
-EchoTables - Ability to create relational tables with PHP, and migrate them with the CL Tool
 
 EchoViews - Provide an abstraction on top of but detached from EchoTables. In combination, the two will provide an ORM-like abstraction but without the "magic".
