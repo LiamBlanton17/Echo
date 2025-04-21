@@ -26,7 +26,7 @@ abstract class EchoAuthModel extends EchoModel {
 
     abstract public function login(EchoRequest $req, EchoResponse $res);
 
-    public function whoiam(EchoRequest $req, EchoResponse $res){
+    public function whoami(EchoRequest $req, EchoResponse $res){
         $isLoggedIn = $this->_isLoggedIn($req);
         $authID = $this->_getAuthID($req);
         $authLevel = $this->_getAuthLevel($req);
