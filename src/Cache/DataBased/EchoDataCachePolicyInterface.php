@@ -4,9 +4,8 @@
 namespace EchoFramework\Application\Cache\DataBased;
 
 /**
- * TODO: Add Description
+ * An interface to implement a data cache policy
  */
-
 interface EchoDataCachePolicyInterface {
 
     /**
