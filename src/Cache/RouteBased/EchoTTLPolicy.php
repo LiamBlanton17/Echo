@@ -6,15 +6,34 @@ use EchoFramework\Application\Main\EchoRequest;
 use EchoFramework\Application\Main\EchoResponse;
 
 /**
- * TODO: Add Description
+ * TTL (time to live) response-based caching polciy
+ * 
+ * Use this class as your route base caching policy to implement a TTL policy
  */
-
 class EchoTTLPolicy implements EchoResponseCachingPolicyInterface {
 
-    private int $TTL = 60;  // Time to live in seconds
-    private bool $reset = TRUE;  // Boolean to reset the cache date or not  
-    private bool $global = FALSE;  // Boolean to use the cache on a global or session basis
+    /**
+     * @var int $TTL is the time to live for this cache in secions
+     */
+    private int $TTL = 60;
 
+    /**
+     * @var bool $reset is a flag to reset (or not) the TTL if the cache is hit
+     */
+    private bool $reset = TRUE;
+    
+    /**
+     * @var bool $global is a flag to cache at a global (every user uses this cache) or session level
+     */
+    private bool $global = FALSE;
+
+    /**
+     * Construct a new TTL policy
+     * 
+     * @param int $TTL is the time to live in seconds
+     * @param bool $reset is a flag to reset (or not) the TTL if the cache is hit
+     * @param bool $global is a flag to cache at a global (every user uses this cache) or session level 
+     */
     public function __construct(int $TTL = 60, bool $reset = TRUE, bool $global = FALSE) {
         $this->TTL = $TTL;
         $this->reset = $reset;
@@ -29,10 +48,11 @@ class EchoTTLPolicy implements EchoResponseCachingPolicyInterface {
     }
 
     /**
-    * @param EchoRequest The request object
-    * @param string The suspected location of the cache
-    * @return EchoResponse|NULL Returns a response object if a cache is found, else NULL
-    */
+     * @param EchoRequest The request object
+     * @param string The suspected location of the cache
+     *
+     * @return EchoResponse|NULL Returns a response object if a cache is found, else NULL
+     */
    public function find(EchoRequest $req, string $location): ?EchoResponse {
 
         // Setting the variable to return 

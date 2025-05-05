@@ -6,9 +6,8 @@ use EchoFramework\Application\Main\EchoRequest;
 use EchoFramework\Application\Main\EchoResponse;
 
 /**
- * TODO: Add Description
+ * A base class to use for Response-based caching
  */
-
 class EchoResponseCache {
 
     /**
